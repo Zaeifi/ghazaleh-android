@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ink">#0F0D0B</color>
+    <color name="panel">#1B1712</color>
+    <color name="gold">#C9A961</color>
+    <color name="gold_light">#E8D9B5</color>
+    <color name="ivory">#F2ECE0</color>
+    <color name="ivory_dim">#C9C1B2</color>
+    <color name="danger">#C0665A</color>
+</resources>

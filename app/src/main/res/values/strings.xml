@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">غزاله ریاضی هروی</string>
+    <string name="offline_title">اتصال اینترنت برقرار نیست</string>
+    <string name="offline_message">لطفاً اتصال اینترنت گوشی خود را بررسی کنید و دوباره تلاش کنید.</string>
+    <string name="retry">تلاش دوباره</string>
+    <string name="exit_confirm">برای خروج از اپلیکیشن، دوباره دکمه بازگشت را بزنید</string>
+</resources>

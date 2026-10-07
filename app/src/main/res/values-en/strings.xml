@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- فقط برای مواردی که اندروید خودش به انگلیسی نیاز دارد (مثلاً برخی دیالوگ‌های سیستمی)؛ رابط اصلی همیشه فارسی است -->
+<resources>
+    <string name="app_name">Ghazaleh Riazi Heravi</string>
+    <string name="offline_title">No internet connection</string>
+    <string name="offline_message">Please check your internet connection and try again.</string>
+    <string name="retry">Retry</string>
+    <string name="exit_confirm">Press back again to exit</string>
+</resources>
