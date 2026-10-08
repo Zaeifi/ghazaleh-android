@@ -19,6 +19,29 @@ android {
         vectorDrawables.useSupportLibrary = true
     }
 
+    // کلید امضای نسخه release: اگر متغیرهای محیطی زیر تنظیم شده باشند (مثلاً در GitHub Actions
+    // از روی Secrets) از همان‌ها استفاده می‌شود؛ در غیر این‌صورت (مثلاً ساخت محلی روی سیستم خودتان
+    // بدون این متغیرها) بیلد release بدون امضا باقی می‌ماند و فقط برای تست لوکال قابل استفاده است.
+    val releaseKeystorePath = System.getenv("RELEASE_KEYSTORE_PATH")
+    val releaseKeystorePassword = System.getenv("RELEASE_KEYSTORE_PASSWORD")
+    val releaseKeyAlias = System.getenv("RELEASE_KEY_ALIAS")
+    val releaseKeyPassword = System.getenv("RELEASE_KEY_PASSWORD")
+    val hasReleaseSigning = !releaseKeystorePath.isNullOrBlank() &&
+        !releaseKeystorePassword.isNullOrBlank() &&
+        !releaseKeyAlias.isNullOrBlank() &&
+        !releaseKeyPassword.isNullOrBlank()
+
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = file(releaseKeystorePath!!)
+                storePassword = releaseKeystorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -26,6 +49,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 

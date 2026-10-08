@@ -11,6 +11,8 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      HAS_RELEASE_SIGNING: ${{ secrets.RELEASE_KEYSTORE_BASE64 != '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,16 +34,38 @@ jobs:
         with:
           gradle-version: "8.7"
 
+      # اگر Secretهای امضا (RELEASE_KEYSTORE_BASE64 و بقیه) در تنظیمات مخزن گیت‌هاب ست شده باشند،
+      # فایل کلید امضا از روی آن‌ها بازسازی می‌شود تا بیلد release با همان کلید امضا شود.
+      - name: Decode release keystore (if configured)
+        if: env.HAS_RELEASE_SIGNING == 'true'
+        run: |
+          echo "${{ secrets.RELEASE_KEYSTORE_BASE64 }}" | base64 -d > "$RUNNER_TEMP/release.keystore"
+          echo "RELEASE_KEYSTORE_PATH=$RUNNER_TEMP/release.keystore" >> "$GITHUB_ENV"
+          echo "RELEASE_KEYSTORE_PASSWORD=${{ secrets.RELEASE_KEYSTORE_PASSWORD }}" >> "$GITHUB_ENV"
+          echo "RELEASE_KEY_ALIAS=${{ secrets.RELEASE_KEY_ALIAS }}" >> "$GITHUB_ENV"
+          echo "RELEASE_KEY_PASSWORD=${{ secrets.RELEASE_KEY_PASSWORD }}" >> "$GITHUB_ENV"
+
       - name: Build debug APK
-        id: build
+        id: build_debug
         shell: bash
         run: |
           set -o pipefail
-          gradle assembleDebug --no-daemon --stacktrace 2>&1 | tee build.log
+          gradle assembleDebug --no-daemon --stacktrace 2>&1 | tee build-debug.log
+        continue-on-error: true
+
+      # نسخه release (AAB برای گوگل‌پلی + APK برای کافه‌بازار/مایکت) فقط وقتی ساخته می‌شود که
+      # کلید امضا در Secrets تنظیم شده باشد — چون انتشار در بازارها بدون کلید امضای واقعی معنی ندارد.
+      - name: Build signed release AAB + APK
+        id: build_release
+        if: env.HAS_RELEASE_SIGNING == 'true'
+        shell: bash
+        run: |
+          set -o pipefail
+          gradle bundleRelease assembleRelease --no-daemon --stacktrace 2>&1 | tee build-release.log
         continue-on-error: true
 
       - name: Report build failure as a commit comment
-        if: steps.build.outcome == 'failure'
+        if: steps.build_debug.outcome == 'failure' || steps.build_release.outcome == 'failure'
         continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
@@ -49,32 +73,47 @@ jobs:
           {
             echo "### Build failed — last 150 lines of gradle output"
             echo '```'
-            tail -n 150 build.log
+            cat build-debug.log build-release.log 2>/dev/null | tail -n 150
             echo '```'
           } > comment.md
           gh api "repos/${{ github.repository }}/commits/${{ github.sha }}/comments" -F body=@comment.md
 
-      - name: Fail job if build failed
-        if: steps.build.outcome == 'failure'
+      - name: Fail job if any build failed
+        if: steps.build_debug.outcome == 'failure' || steps.build_release.outcome == 'failure'
         run: exit 1
 
-      - name: Upload APK artifact
+      - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: ghazaleh-riazi-app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Publish APK to builds branch (git-fetchable, no blob storage)
+      - name: Upload release artifacts
+        if: env.HAS_RELEASE_SIGNING == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ghazaleh-riazi-app-release
+          path: |
+            app/build/outputs/bundle/release/app-release.aab
+            app/build/outputs/apk/release/app-release.apk
+
+      # دانلود artifact/لاگ از این مخزن از طریق فضای ذخیره‌سازی ابری گیت‌هاب در محیط توسعه مسدود است،
+      # پس همه خروجی‌های بیلد را روی یک برنچ جدا هم push می‌کنیم تا با گیت معمولی قابل دریافت باشند.
+      - name: Publish build outputs to builds branch (git-fetchable, no blob storage)
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p /tmp/apk-publish
           cp app/build/outputs/apk/debug/app-debug.apk /tmp/apk-publish/ghazaleh-riazi-app-debug.apk
+          if [ "$HAS_RELEASE_SIGNING" = "true" ]; then
+            cp app/build/outputs/bundle/release/app-release.aab /tmp/apk-publish/ghazaleh-riazi-app-release.aab
+            cp app/build/outputs/apk/release/app-release.apk /tmp/apk-publish/ghazaleh-riazi-app-release.apk
+          fi
           cd /tmp/apk-publish
           git init -q
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add ghazaleh-riazi-app-debug.apk
-          git commit -q -m "APK build from ${{ github.sha }}"
+          git add -A
+          git commit -q -m "Build outputs from ${{ github.sha }}"
           git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
           git push -q -f origin HEAD:refs/heads/builds/latest-apk
