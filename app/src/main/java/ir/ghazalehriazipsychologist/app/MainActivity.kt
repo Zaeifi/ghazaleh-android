@@ -28,10 +28,6 @@ class MainActivity : AppCompatActivity() {
             openContent(item.title, item.path)
         }
 
-        findViewById<android.widget.Button>(R.id.bookNowButton).setOnClickListener {
-            openContent("رزرو نوبت", "booking.php")
-        }
-
         findViewById<TextView>(R.id.adminLoginLink).setOnClickListener {
             openContent("ورود مدیر", "login.php")
         }

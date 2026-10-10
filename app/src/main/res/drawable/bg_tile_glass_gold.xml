@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- کارت شیشه‌ای طلایی برجسته برای آیتم اول (رزرو نوبت) -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="18dp" />
+            <gradient
+                android:angle="135"
+                android:startColor="#99EADFBE"
+                android:centerColor="#6BD8BC7C"
+                android:endColor="#60AD8A4C" />
+            <stroke
+                android:width="1dp"
+                android:color="#8FFFF5D7" />
+        </shape>
+    </item>
+    <item android:bottom="40dp">
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="18dp"
+                android:topRightRadius="18dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="0dp" />
+            <gradient
+                android:angle="90"
+                android:startColor="#4DFFFFFF"
+                android:endColor="#00FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

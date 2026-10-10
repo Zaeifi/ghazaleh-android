@@ -19,18 +19,18 @@ object AppMenu {
         MenuItemData("رزرو نوبت", R.drawable.ic_booking, "booking.php"),
     )
 
-    // شبکه آیکون‌های صفحه خانه
+    // شبکه آیکون‌های صفحه خانه — ترتیب و نام‌گذاری دقیقاً مطابق طرح تأییدشده
     val homeGrid = listOf(
-        MenuItemData("درباره من", R.drawable.ic_home, "index.php#about"),
+        MenuItemData("رزرو نوبت", R.drawable.ic_booking, "booking.php"),
         MenuItemData("خدمات", R.drawable.ic_services, "services.php"),
         MenuItemData("تست‌های روان‌شناسی", R.drawable.ic_tests, "tests.php"),
-        MenuItemData("رزرو نوبت", R.drawable.ic_booking, "booking.php"),
-        MenuItemData("مقالات", R.drawable.ic_articles, "articles.php"),
         MenuItemData("گالری", R.drawable.ic_gallery, "gallery.php"),
         MenuItemData("کارگاه‌ها", R.drawable.ic_workshops, "workshops.php"),
         MenuItemData("ویدئوها", R.drawable.ic_videos, "videos.php"),
+        MenuItemData("مقالات", R.drawable.ic_articles, "articles.php"),
+        MenuItemData("تجربه با مراجعین", R.drawable.ic_experiences, "experiences.php"),
+        MenuItemData("درباره من", R.drawable.ic_home, "index.php#about"),
+        MenuItemData("تماس", R.drawable.ic_contact, "index.php#contact"),
         MenuItemData("سوالات متداول", R.drawable.ic_faq, "faq.php"),
-        MenuItemData("تجربه مراجعین", R.drawable.ic_experiences, "experiences.php"),
-        MenuItemData("تماس و آدرس", R.drawable.ic_contact, "index.php#contact"),
     )
 }

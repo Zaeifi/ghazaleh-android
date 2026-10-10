@@ -9,4 +9,10 @@
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:navigationBarColor">@color/ink</item>
     </style>
+
+    <!-- برای نمایش دایره‌ای عکس پروفایل و بج فاوآیکون -->
+    <style name="ShapeAppearanceOverlay.GhazalehApp.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class MenuGridAdapter(
@@ -27,6 +28,15 @@ class MenuGridAdapter(
         holder.icon.setImageResource(item.iconRes)
         holder.label.text = item.title
         holder.itemView.setOnClickListener { onClick(item) }
+
+        // آیتم اول (رزرو نوبت) به‌صورت کارت شیشه‌ای طلایی برجسته نمایش داده می‌شود
+        if (position == 0) {
+            holder.itemView.setBackgroundResource(R.drawable.bg_tile_glass_gold)
+            holder.label.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.ink))
+        } else {
+            holder.itemView.setBackgroundResource(R.drawable.bg_tile_glass)
+            holder.label.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.ivory))
+        }
     }
 
     override fun getItemCount() = items.size

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- پس‌زمینه صفحه خانه: زمینه مشکی مایل به قهوه‌ای با هاله نوری طلایی ملایم در بالای صفحه -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/ink" />
+        </shape>
+    </item>
+    <item android:bottom="520dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="radial"
+                android:gradientRadius="260dp"
+                android:centerX="0.5"
+                android:centerY="0.15"
+                android:startColor="#33C9A961"
+                android:centerColor="#14C9A961"
+                android:endColor="#00C9A961" />
+        </shape>
+    </item>
+</layer-list>

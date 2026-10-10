@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/ink">
+    android:background="@drawable/bg_home_glow">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -16,58 +16,96 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="24dp">
+            android:paddingBottom="28dp">
 
-            <!-- هدر خانه -->
+            <!-- هدر: عکس پروفایل، نام، عنوان فرعی -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:background="@color/panel"
-                android:paddingTop="40dp"
-                android:paddingBottom="28dp"
+                android:paddingTop="36dp"
+                android:paddingBottom="6dp"
                 android:paddingStart="24dp"
                 android:paddingEnd="24dp">
 
+                <FrameLayout
+                    android:layout_width="112dp"
+                    android:layout_height="112dp">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_profile_ring" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="3dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/profile_photo"
+                        android:contentDescription="@string/app_name"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.GhazalehApp.Circle"
+                        app:strokeColor="@color/ink"
+                        app:strokeWidth="2dp" />
+
+                    <FrameLayout
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_gravity="bottom|left">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_badge_ring" />
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/site_favicon"
+                            android:contentDescription="@null"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.GhazalehApp.Circle" />
+
+                    </FrameLayout>
+
+                </FrameLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
                     android:text="غزاله ریاضی هروی"
-                    android:textColor="@color/gold_light"
-                    android:textSize="22sp"
+                    android:textColor="@color/ivory"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="روانشناس بالینی"
-                    android:textColor="@color/ivory_dim"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="5dp"
+                    android:text="مطب روان‌شناسی و مشاوره"
+                    android:textColor="@color/gold"
+                    android:textSize="13sp" />
 
-                <Button
-                    android:id="@+id/bookNowButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/gold"
-                    android:textColor="@color/ink"
-                    android:paddingStart="28dp"
-                    android:paddingEnd="28dp"
-                    android:text="رزرو نوبت آنلاین"
-                    android:textStyle="bold" />
+                <View
+                    android:layout_width="46dp"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/divider_gold_fade" />
 
             </LinearLayout>
 
-            <!-- شبکه آیکون‌های منو -->
+            <!-- شبکه آیتم‌های منو (نام‌گذاری بر اساس هدر سایت) -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/menuGrid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
+                android:layout_marginTop="18dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:clipToPadding="false"
                 android:nestedScrollingEnabled="false" />
 
             <TextView
@@ -75,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="26dp"
                 android:padding="12dp"
                 android:text="ورود متخصص به پنل مدیریت"
                 android:textColor="@color/ivory_dim"

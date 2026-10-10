@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- کارت شیشه‌ای مات برای آیتم‌های منو (به‌جز آیتم طلایی اول) -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="18dp" />
+            <gradient
+                android:angle="135"
+                android:startColor="#29FFFFFF"
+                android:centerColor="#0DFFFFFF"
+                android:endColor="#05FFFFFF" />
+            <stroke
+                android:width="1dp"
+                android:color="#38FFFFFF" />
+        </shape>
+    </item>
+    <item android:bottom="40dp">
+        <shape android:shape="rectangle">
+            <corners
+                android:topLeftRadius="18dp"
+                android:topRightRadius="18dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="0dp" />
+            <gradient
+                android:angle="90"
+                android:startColor="#24FFFFFF"
+                android:endColor="#00FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

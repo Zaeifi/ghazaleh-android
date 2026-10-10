@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- حلقه طلایی دور عکس پروفایل -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+    <gradient
+        android:angle="135"
+        android:startColor="#EADFBE"
+        android:centerColor="#C9A961"
+        android:endColor="#8C6F38" />
+</shape>
